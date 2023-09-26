@@ -23,6 +23,8 @@ app.use(
   })
 );
 
+// Now you can use Firebase Admin SDK services in your Node.js application
+
 // database connection
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING, {

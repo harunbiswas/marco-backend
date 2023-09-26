@@ -10,7 +10,8 @@ const loginControler = async function (req, res) {
 
   try {
     const user = await People.find();
-    if (user !== null) {
+    if (user !== null && user.length) {
+      console.log(user);
       try {
         const result = await People.find({ email: req.body.email });
 
