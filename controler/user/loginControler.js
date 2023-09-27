@@ -11,7 +11,6 @@ const loginControler = async function (req, res) {
   try {
     const user = await People.find();
     if (user !== null && user.length) {
-      console.log(user);
       try {
         const result = await People.find({ email: req.body.email });
 
@@ -75,10 +74,11 @@ const loginControler = async function (req, res) {
               email: result.email,
               role: result.role,
             };
-            const token = jwt.sign(userObject, process.env.JWT_SECRATE);
+            const token = jwt.sign(result, process.env.JWT_SECRATE);
             userObject.token = token;
+            result.password = "";
             res.status(200).json({
-              userObject,
+              result,
             });
           } else {
             res.status(400).json({
@@ -116,4 +116,139 @@ const loginControler = async function (req, res) {
   }
 };
 
-module.exports = { loginControler };
+// get single user
+const getUser = async function (req, res) {
+  const { email } = req.body.user;
+  try {
+    const result = await People.findOne({ email });
+    result.password = "";
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({
+      errors: {
+        msg: "Internal server errors",
+      },
+    });
+  }
+};
+
+// get single user by body email
+const getSingleUser = async function (req, res) {
+  const { email } = req.query;
+
+  try {
+    const result = await People.findOne({ email });
+    result.password = "";
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({
+      errors: {
+        msg: "Internal server error",
+      },
+    });
+  }
+};
+
+// get all users
+
+const getUsers = async function (req, res) {
+  try {
+    const result = await People.find();
+    const modifiedResult = result.map((doc) => ({
+      ...doc.toObject(),
+      password: null,
+    }));
+    res.status(200).json(modifiedResult);
+  } catch (err) {
+    res.status(500).json({
+      errors: {
+        msg: "Internal server errors",
+      },
+    });
+  }
+};
+
+// add user
+const addUser = async function (req, res) {
+  const { email } = req.body;
+  try {
+    const result = await People.findOne({ email });
+
+    if (result) {
+      res.status(400).json({
+        email: "Email already added",
+      });
+    } else {
+      try {
+        const user = new People(req.body);
+        const result1 = await user.save();
+        res.status(200).json(result1);
+      } catch (err) {
+        res.status(500).json({
+          errors: {
+            msg: "Internal server error",
+          },
+        });
+      }
+    }
+  } catch (err) {
+    res.status(500).json({
+      errors: {
+        msg: "Internal server errors",
+      },
+    });
+  }
+};
+
+// update user
+const updateUser = async function (req, res) {
+  const { _id, password } = req.body;
+
+  if (password) {
+    const hashedPss = await bcrypt.hash(password, 10);
+    req.body.password = hashedPss;
+  } else {
+    delete req.body.password;
+  }
+
+  try {
+    const result1 = await People.findOneAndUpdate({ _id }, req.body, {
+      new: true,
+    });
+    res.status(200).json(result1);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      errors: {
+        msg: "Internal server error",
+      },
+    });
+  }
+};
+
+// delete user
+const deleteUser = async function (req, res) {
+  const { id } = req.query;
+
+  try {
+    const result1 = await People.deleteOne({ _id: id });
+    res.status(200).json(result1);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      errors: {
+        msg: "Internal server error",
+      },
+    });
+  }
+};
+
+module.exports = {
+  loginControler,
+  getUser,
+  getUsers,
+  addUser,
+  getSingleUser,
+  updateUser,
+  deleteUser,
+};

@@ -15,8 +15,25 @@ const peopleSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    enum: ["admin", "sub-admin"],
-    default: "sub-admin",
+    enum: ["admin", "manager", "base"],
+    default: "admin",
+  },
+  firstName: {
+    type: String,
+    trim: true,
+    required: true,
+    default: "Marco",
+  },
+  lastName: {
+    type: String,
+    trim: true,
+    required: true,
+    default: "S",
+  },
+  img: {
+    type: String,
+    default:
+      "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png",
   },
 });
 
