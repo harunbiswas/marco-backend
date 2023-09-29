@@ -11,6 +11,7 @@ const transportSchema = new mongoose.Schema({
   vehicleBrand: String,
   startingDate: Date,
   endingDate: Date,
+  hours: [String],
   days: [String],
   pricing: [
     {

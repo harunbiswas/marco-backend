@@ -1,5 +1,8 @@
 const express = require("express");
-const { addTransport } = require("../controler/transport/TransportControler");
+const {
+  addTransport,
+  getTransport,
+} = require("../controler/transport/TransportControler");
 const authGurd = require("../middlewares/common/authGurd");
 const {
   addTransportValidator,
@@ -9,10 +12,6 @@ const validationHandler = require("../middlewares/common/validation");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  res.status(200).json("Transport router");
-});
-
 // add transport
 router.post(
   "/",
@@ -21,4 +20,6 @@ router.post(
   validationHandler,
   addTransport
 );
+
+router.get("/", authGurd, getTransport);
 module.exports = router;
