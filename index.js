@@ -6,6 +6,8 @@ const path = require("path");
 const userRouter = require("./router/userRouter");
 const hotelRouter = require("./router/hotelRouter");
 const imageRouter = require("./router/imageRouter");
+const transportRouter = require("./router/transportRouter");
+
 const {
   notFoundHandler,
   errorHandler,
@@ -52,6 +54,9 @@ app.use("/hotel", hotelRouter);
 
 // image
 app.use("/image", imageRouter);
+
+// transport router
+app.use("/transport", transportRouter);
 
 // 404 handler
 app.use(notFoundHandler);
