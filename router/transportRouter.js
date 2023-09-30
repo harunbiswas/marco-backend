@@ -2,6 +2,8 @@ const express = require("express");
 const {
   addTransport,
   getTransport,
+  updateTransport,
+  deleteTransport,
 } = require("../controler/transport/TransportControler");
 const authGurd = require("../middlewares/common/authGurd");
 const {
@@ -21,5 +23,16 @@ router.post(
   addTransport
 );
 
+router.put(
+  "/",
+  authGurd,
+  addTransportValidator,
+  validationHandler,
+  updateTransport
+);
+
 router.get("/", authGurd, getTransport);
+
+// delete transport
+router.delete("/", authGurd, deleteTransport);
 module.exports = router;
