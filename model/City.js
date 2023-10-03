@@ -8,6 +8,7 @@ const citySchecma = new mongoose.Schema(
       required: true,
     },
     zip: String,
+    region: String,
   },
   {
     timestamps: true,

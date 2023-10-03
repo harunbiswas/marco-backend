@@ -7,6 +7,7 @@ const vahicaleSchecma = new mongoose.Schema(
       trim: true,
       required: true,
     },
+    vehicaleType: String,
   },
   {
     timestamps: true,
