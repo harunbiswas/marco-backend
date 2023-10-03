@@ -170,7 +170,7 @@ const getUsers = async function (req, res) {
 
 // add user
 const addUser = async function (req, res) {
-  const { email } = req.body;
+  const { email, password } = req.body;
   try {
     const result = await People.findOne({ email });
 
@@ -180,6 +180,8 @@ const addUser = async function (req, res) {
       });
     } else {
       try {
+        const hashedPss = await bcrypt.hash(password, 10);
+        req.password = hashedPss;
         const user = new People(req.body);
         const result1 = await user.save();
         res.status(200).json(result1);
