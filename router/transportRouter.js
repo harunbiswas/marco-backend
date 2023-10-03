@@ -11,6 +11,11 @@ const {
 } = require("../middlewares/transport/transportValidatror");
 const { validationResult } = require("express-validator");
 const validationHandler = require("../middlewares/common/validation");
+const {
+  addVehicale,
+  getVahicales,
+  deleteVahicale,
+} = require("../controler/transport/vahicaleControler");
 
 const router = express.Router();
 
@@ -32,6 +37,11 @@ router.put(
 );
 
 router.get("/", authGurd, getTransport);
+
+// vehicale
+router.post("/vahicale", addVehicale);
+router.get("/vahicale", getVahicales);
+router.delete("/vahicale", deleteVahicale);
 
 // delete transport
 router.delete("/", authGurd, deleteTransport);
