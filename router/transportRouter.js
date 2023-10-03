@@ -16,6 +16,11 @@ const {
   getVahicales,
   deleteVahicale,
 } = require("../controler/transport/vahicaleControler");
+const {
+  addCity,
+  getCitys,
+  deleteCity,
+} = require("../controler/transport/cityControler");
 
 const router = express.Router();
 
@@ -42,6 +47,11 @@ router.get("/", authGurd, getTransport);
 router.post("/vahicale", addVehicale);
 router.get("/vahicale", getVahicales);
 router.delete("/vahicale", deleteVahicale);
+
+// city
+router.post("/city", addCity);
+router.get("/city", getCitys);
+router.delete("/city", deleteCity);
 
 // delete transport
 router.delete("/", authGurd, deleteTransport);
