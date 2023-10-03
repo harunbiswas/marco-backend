@@ -32,6 +32,14 @@ const transportSchema = new mongoose.Schema(
         unit: String,
       },
     ],
+    timing: [
+      {
+        id: Number,
+        start: String,
+        end: String,
+        cost: Number,
+      },
+    ],
   },
   {
     timestamps: true,
