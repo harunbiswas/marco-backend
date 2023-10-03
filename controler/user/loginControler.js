@@ -176,7 +176,9 @@ const addUser = async function (req, res) {
 
     if (result) {
       res.status(400).json({
-        email: "L’email è già utilizzata da un altro account",
+        errors: {
+          email: "L’email è già utilizzata da un altro account",
+        },
       });
     } else {
       try {
