@@ -30,6 +30,8 @@ const transportSchema = new mongoose.Schema(
         carency: String,
         count: Number,
         unit: String,
+        disclaimer: String,
+        dimensioneAuto: String,
       },
     ],
     timing: [
