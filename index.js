@@ -7,6 +7,7 @@ const userRouter = require("./router/userRouter");
 const hotelRouter = require("./router/hotelRouter");
 const imageRouter = require("./router/imageRouter");
 const transportRouter = require("./router/transportRouter");
+const moduleRouter = require("./router/moduleRouter");
 
 const {
   notFoundHandler,
@@ -57,6 +58,9 @@ app.use("/image", imageRouter);
 
 // transport router
 app.use("/transport", transportRouter);
+
+// module router
+app.use("/module", moduleRouter);
 
 // 404 handler
 app.use(notFoundHandler);
