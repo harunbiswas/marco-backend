@@ -10,8 +10,12 @@ const transportSchema = new mongoose.Schema(
     address: String,
     vehicleType: String,
     vehicleBrand: String,
-    startingDate: String,
-    endingDate: String,
+    date: [
+      {
+        start: String,
+        end: String,
+      },
+    ],
     hours: [
       {
         isEdit: Boolean,
