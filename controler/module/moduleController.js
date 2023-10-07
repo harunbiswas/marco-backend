@@ -7,7 +7,8 @@ const addModule = async function addModule(req, res) {
   try {
     const result = await module.save();
     res.status(200).json(result);
-  } catch {
+  } catch (err) {
+    // console.log(err);
     res.status(500).json("Internal server errors");
   }
 };

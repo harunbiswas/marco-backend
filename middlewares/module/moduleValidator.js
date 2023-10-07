@@ -6,15 +6,19 @@ const addModuleValidator = [
   check("id")
     .isLength({ min: 1 })
     .withMessage("Id is required")
-    .custom(async (req, res, next) => {
+    .custom(async (id) => {
       try {
-        const result = await Module.findOne({ id: req.id });
-        next();
+        const result = await Module.findOne({ id });
+
+        if (result) {
+          throw new Error("Id already exist!");
+        }
+
+        return true;
       } catch (err) {
-        res.stauts(200).json("Internal server errors");
+        throw new Error("Id already exist");
       }
-    })
-    .withMessage("Id already use"),
+    }),
 ];
 
 module.exports = { addModuleValidator };
