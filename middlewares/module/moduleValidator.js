@@ -8,7 +8,7 @@ const addModuleValidator = [
     .withMessage("Id is required")
     .custom(async (req, res, next) => {
       try {
-        const result = await Module.findOne({ id: req, id });
+        const result = await Module.findOne({ id: req.id });
         next();
       } catch (err) {
         res.stauts(200).json("Internal server errors");
