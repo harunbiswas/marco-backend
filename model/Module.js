@@ -24,7 +24,7 @@ const moduleSchema = new mongoose.Schema(
     section2Desctiption: String,
     section3Title: String,
     section3Description: String,
-    blog: [{ title: String, img: String, url: String }],
+    blog: [{ id: Number, title: String, img: String, url: String }],
     bottomDescription: String,
     fiexDate: [
       {
