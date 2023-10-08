@@ -2,8 +2,18 @@ const Hotel = require("../../model/Hotel");
 const mongoose = require("mongoose");
 
 // get hotels
-const getHotels = async function (req, res, next) {
-  res.status(200).json("hotels");
+const getHotels = async function (req, res) {
+  try {
+    const result = await Hotel.find({});
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      errors: {
+        msg: "Internal server error",
+      },
+    });
+  }
 };
 
 const addHotel = async function (req, res) {
@@ -47,10 +57,9 @@ const addHotel = async function (req, res) {
 
 //get single hotel
 const getHotel = async function (req, res) {
-  const { id } = req.query;
-  const objectId = new mongoose.Types.ObjectId(id);
-
   try {
+    const { id } = req.query;
+    const objectId = new mongoose.Types.ObjectId(id);
     const result = await Hotel.findOne({ _id: objectId });
     res.status(200).json(result);
   } catch (err) {
@@ -64,10 +73,10 @@ const getHotel = async function (req, res) {
 
 // upload hotel handler
 const updateHotel = async function (req, res) {
-  const { id } = req.body;
+  const { _id } = req.body;
   try {
-    const result = await Hotel.findOneAndUpdate(
-      { id },
+    const result = await Hotel.findByIdAndUpdate(
+      { _id: new mongoose.Types.ObjectId(_id) },
       {
         $set: { ...req.body },
       }
@@ -75,6 +84,7 @@ const updateHotel = async function (req, res) {
 
     res.status(200).json(result);
   } catch (err) {
+    console.log(err);
     res.status(200).json({
       errors: {
         msg: "Internal server errors",
@@ -83,4 +93,67 @@ const updateHotel = async function (req, res) {
   }
 };
 
-module.exports = { getHotels, addHotel, getHotel, updateHotel };
+const addNewOffer = async function (req, res) {
+  console.log(req.body);
+  const { newOffer, hotelId } = req.body;
+  try {
+    const result = await Hotel.updateOne(
+      { _id: hotelId },
+      { $addToSet: { offers: newOffer } }
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      errors: {
+        msg: "Internal server error",
+      },
+    });
+  }
+};
+
+const updateOffer = async function (req, res) {
+  const { updatedOffer, hotelId, offerId } = req.body;
+  console.log(req.body);
+  const offerToUpdate = {};
+  for (const prop in updatedOffer) {
+    offerToUpdate[`offers.$.${prop}`] = updatedOffer[prop];
+  }
+  try {
+    const result = await Hotel.updateOne(
+      { _id: hotelId, "offers._id": offerId },
+      { $set: offerToUpdate }
+    );
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      errors: {
+        msg: "Internal server error",
+      },
+    });
+  }
+};
+
+// Delete Hotel
+const deleteHotel = async function (req, res) {
+  try {
+    const { id } = req.params;
+    const result = await Hotel.findOneAndDelete({ _id: id });
+    console.log(result);
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Internal server errors");
+  }
+};
+
+module.exports = {
+  getHotels,
+  addHotel,
+  getHotel,
+  updateHotel,
+  addNewOffer,
+  updateOffer,
+  deleteHotel,
+};

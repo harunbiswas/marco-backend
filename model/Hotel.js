@@ -1,5 +1,63 @@
 const mongoose = require("mongoose");
 
+const offerSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    id: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    description: {
+      type: String,
+    },
+    startDate: {
+      type: Date,
+    },
+    endDate: {
+      type: Date,
+    },
+    minStay: {
+      type: Number,
+    },
+    maxStay: {
+      type: Number,
+    },
+    beverageAvailability: {
+      type: String,
+    },
+    tags: [String],
+    breakdown: [
+      {
+        breakdownId: Number,
+        name: String,
+        priceType: String,
+        currency: String,
+        price: Number,
+      },
+    ],
+    ageReduction: [
+      {
+        reductionId: Number,
+        boardType: String,
+        agelimit: Number,
+        discount: Number,
+      },
+    ],
+    // publish: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+  },
+  {
+    timestamps: true,
+  }
+);
+
 const hotelSchema = new mongoose.Schema(
   {
     id: {
@@ -78,7 +136,7 @@ const hotelSchema = new mongoose.Schema(
               default: 1,
             },
             label: String,
-            value: String,
+            value: Number,
           },
           {
             id: {
@@ -86,7 +144,7 @@ const hotelSchema = new mongoose.Schema(
               default: 2,
             },
             label: String,
-            value: String,
+            value: Number,
           },
         ],
       },
@@ -108,12 +166,17 @@ const hotelSchema = new mongoose.Schema(
     },
     distance: [
       {
-        name: String,
-        scle: String,
-        dist: Number,
+        id: {
+          type: Number,
+          default: 1,
+        },
+        isEdit: Boolean,
+        label: String,
+        scale: String,
+        distance: Number,
       },
     ],
-    offers: [String],
+    offers: [offerSchema],
   },
   {
     timestamps: true,
