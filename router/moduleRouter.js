@@ -10,6 +10,9 @@ const {
   getModule,
   editModule,
   deleteModule,
+  addTemplete,
+  getTempletes,
+  getTemplete,
 } = require("../controler/module/moduleController");
 
 const router = express.Router();
@@ -22,5 +25,10 @@ router.get("/", getModules);
 router.get("/single", getModule);
 router.put("/", editModule);
 router.delete("/", deleteModule);
+
+// add templete
+router.post("/templete", authGurd, addTemplete);
+router.get("/templetes", authGurd, getTempletes);
+router.get("/templete", authGurd, getTemplete);
 
 module.exports = router;
