@@ -7,6 +7,7 @@ const addTransport = async function (req, res) {
     const result = await transport.save();
     res.status(200).json(result);
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       errors: {
         msg: "Internal server error",
