@@ -97,6 +97,17 @@ const getTemplete = async function (req, res) {
   }
 };
 
+// delete module
+const deleteTemplete = async function (req, res) {
+  const { id } = req.query;
+  try {
+    const result = await Templete.findByIdAndDelete({ _id: id });
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json("Internal server errors");
+  }
+};
+
 module.exports = {
   addModule,
   getModules,
@@ -106,4 +117,5 @@ module.exports = {
   addTemplete,
   getTempletes,
   getTemplete,
+  deleteTemplete,
 };
