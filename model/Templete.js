@@ -33,8 +33,8 @@ const templeteShema = new mongoose.Schema(
     fixtRegion: [
       {
         id: Number,
-        start: String,
-        end: String,
+        region: String,
+        city: String,
         carrency: String,
         price: String,
       },
