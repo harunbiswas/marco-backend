@@ -1,6 +1,9 @@
 const express = require("express");
 const authGurd = require("../middlewares/common/authGurd");
-const { addModuleValidator } = require("../middlewares/module/moduleValidator");
+const {
+  addModuleValidator,
+  addDateTempleteValidator,
+} = require("../middlewares/module/moduleValidator");
 const { validationResult } = require("express-validator");
 const { validate } = require("../model/Module");
 const validationHandler = require("../middlewares/common/validation");
@@ -15,6 +18,14 @@ const {
   getTemplete,
   deleteTemplete,
 } = require("../controler/module/moduleController");
+const {
+  addDateTemplete,
+  getDateTempletes,
+  deleteDateTempletes,
+  addRegionTemplete,
+  getRegionTempletes,
+  deleteRegionTempletes,
+} = require("../controler/module/offerControler");
 
 const router = express.Router();
 
@@ -32,5 +43,29 @@ router.post("/templete", authGurd, addTemplete);
 router.get("/templetes", authGurd, getTempletes);
 router.get("/templete", authGurd, getTemplete);
 router.delete("/templete", authGurd, deleteTemplete);
+
+// dete templete
+router.post(
+  "dateTemplete",
+  authGurd,
+  addDateTempleteValidator,
+  validationHandler,
+  addDateTemplete
+);
+
+router.get("dateTempletes", getDateTempletes);
+router.delete("/dateTemplete", authGurd, deleteDateTempletes);
+
+// region templete
+router.post(
+  "regionTemplete",
+  authGurd,
+  addDateTempleteValidator,
+  validationHandler,
+  addRegionTemplete
+);
+
+router.get("regionTempletes", getRegionTempletes);
+router.delete("/regionTemplete", authGurd, deleteRegionTempletes);
 
 module.exports = router;

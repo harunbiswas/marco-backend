@@ -21,4 +21,8 @@ const addModuleValidator = [
     }),
 ];
 
-module.exports = { addModuleValidator };
+const addDateTempleteValidator = [
+  check("name").isLength({ min: 1 }).withMessage("Name is required").trim(),
+];
+
+module.exports = { addModuleValidator, addDateTempleteValidator };
