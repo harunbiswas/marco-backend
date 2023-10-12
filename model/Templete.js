@@ -28,6 +28,8 @@ const templeteShema = new mongoose.Schema(
         end: String,
         price: String,
         carrency: String,
+        hotelName: String,
+        offerName: String,
       },
     ],
     fixtRegion: [
