@@ -1,3 +1,4 @@
+const { body } = require("express-validator");
 const DateTemplete = require("../../model/DateTemplete");
 
 // add date templete
@@ -43,6 +44,7 @@ const addRegionTemplete = async function (req, res) {
     const result = await dateTemplete.save();
     res.status(200).json(result);
   } catch (err) {
+    console.log(err);
     res.status(500).json("Internal server error");
   }
 };
