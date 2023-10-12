@@ -17,7 +17,7 @@ const addModule = async function (req, res) {
 // get modules
 const getModules = async function (req, res) {
   try {
-    const result = await Module.find();
+    const result = await Module.find({ publish: true });
     res.status(200).json(result);
   } catch {
     res.status(500).json("Internal server errors");
