@@ -6,6 +6,6 @@ const regionTempleteSchema = new mongoose.Schema({
   dates: [{ start: String, end: String, price: String }],
 });
 
-const RegionTemplete = mongoose.Model("RegionTemplete", regionTempleteSchema);
+const RegionTemplete = mongoose.model("RegionTemplete", regionTempleteSchema);
 
 module.exports = RegionTemplete;

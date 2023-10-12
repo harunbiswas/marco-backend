@@ -32,7 +32,6 @@ const deleteDateTempletes = async function (req, res) {
   }
 };
 
-const DateTemplete = require("../../model/DateTemplete");
 const RegionTemplete = require("../../model/RegionTemplete");
 
 // add region templete
