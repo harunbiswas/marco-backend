@@ -23,6 +23,7 @@ const templeteShema = new mongoose.Schema(
     bottomDescription: String,
     fiexDate: [
       {
+        id: Number,
         start: String,
         end: String,
         price: String,
@@ -31,6 +32,7 @@ const templeteShema = new mongoose.Schema(
     ],
     fixtRegion: [
       {
+        id: Number,
         start: String,
         end: String,
         carrency: String,

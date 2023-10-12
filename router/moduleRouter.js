@@ -40,32 +40,32 @@ router.delete("/", deleteModule);
 
 // add templete
 router.post("/templete", authGurd, addTemplete);
-router.get("/templetes", authGurd, getTempletes);
-router.get("/templete", authGurd, getTemplete);
+router.get("/templetes", getTempletes);
+router.get("/templete", getTemplete);
 router.delete("/templete", authGurd, deleteTemplete);
 
 // dete templete
 router.post(
-  "dateTemplete",
+  "/dateTemplete",
   authGurd,
   addDateTempleteValidator,
   validationHandler,
   addDateTemplete
 );
 
-router.get("dateTempletes", getDateTempletes);
+router.get("/dateTempletes", getDateTempletes);
 router.delete("/dateTemplete", authGurd, deleteDateTempletes);
 
 // region templete
 router.post(
-  "regionTemplete",
+  "/regionTemplete",
   authGurd,
   addDateTempleteValidator,
   validationHandler,
   addRegionTemplete
 );
 
-router.get("regionTempletes", getRegionTempletes);
+router.get("/regionTempletes", getRegionTempletes);
 router.delete("/regionTemplete", authGurd, deleteRegionTempletes);
 
 module.exports = router;

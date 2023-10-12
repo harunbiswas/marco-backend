@@ -6,17 +6,19 @@ const addDateTemplete = async function (req, res) {
     const dateTemplete = new DateTemplete(req.body);
     const result = await dateTemplete.save();
     res.status(200).json(result);
-  } catch {
-    res.status(500).json("Internal server error");
+  } catch (err) {
+    console.log(err);
+    res.status(500).json("Internal server errors");
   }
 };
 
 // get dateTempletes
 const getDateTempletes = async function (req, res) {
   try {
-    const result = DateTemplete.find();
+    const result = await DateTemplete.find();
     res.status(200).json(result);
-  } catch {
+  } catch (err) {
+    console.log(err);
     res.status(500).json("Internal server error");
   }
 };
@@ -25,7 +27,7 @@ const getDateTempletes = async function (req, res) {
 const deleteDateTempletes = async function (req, res) {
   const { id } = req.query;
   try {
-    const result = DateTemplete.findOneAndDelete({ _id: id });
+    const result = await DateTemplete.findOneAndDelete({ _id: id });
     res.status(200).json(result);
   } catch {
     res.status(500).json("Internal server error");
@@ -40,7 +42,7 @@ const addRegionTemplete = async function (req, res) {
     const dateTemplete = new RegionTemplete(req.body);
     const result = await dateTemplete.save();
     res.status(200).json(result);
-  } catch {
+  } catch (err) {
     res.status(500).json("Internal server error");
   }
 };
@@ -48,7 +50,7 @@ const addRegionTemplete = async function (req, res) {
 // get region Templetes
 const getRegionTempletes = async function (req, res) {
   try {
-    const result = RegionTemplete.find();
+    const result = await RegionTemplete.find();
     res.status(200).json(result);
   } catch {
     res.status(500).json("Internal server error");
@@ -59,7 +61,7 @@ const getRegionTempletes = async function (req, res) {
 const deleteRegionTempletes = async function (req, res) {
   const { id } = req.query;
   try {
-    const result = RegionTemplete.findOneAndDelete({ _id: id });
+    const result = await RegionTemplete.findOneAndDelete({ _id: id });
     res.status(200).json(result);
   } catch {
     res.status(500).json("Internal server error");

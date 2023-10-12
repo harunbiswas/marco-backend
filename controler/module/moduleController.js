@@ -29,7 +29,7 @@ const getModule = async function (req, res) {
   const { id } = req.query;
 
   try {
-    const result = await Module.findOne({ _id: id });
+    let result = await Module.findOne({ _id: id });
     res.status(200).json(result);
   } catch {
     res.status(500).json("Internal server errors");
