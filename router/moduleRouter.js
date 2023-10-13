@@ -35,8 +35,8 @@ router.post("/", authGurd, addModuleValidator, validationHandler, addModule);
 // get modules
 router.get("/", getModules);
 router.get("/single", getModule);
-router.put("/", editModule);
-router.delete("/", deleteModule);
+router.put("/", authGurd, editModule);
+router.delete("/", authGurd, deleteModule);
 
 // add templete
 router.post("/templete", authGurd, addTemplete);

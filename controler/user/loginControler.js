@@ -23,6 +23,7 @@ const loginControler = async function (req, res) {
             const userObject = {
               email: result[0].email,
               role: result[0].role,
+              id: result[0]._id,
             };
             const token = jwt.sign(userObject, process.env.JWT_SECRATE);
             userObject.token = token;
@@ -73,6 +74,7 @@ const loginControler = async function (req, res) {
             const userObject = {
               email: result.email,
               role: result.role,
+              id: result[0]._id,
             };
             const token = jwt.sign(result, process.env.JWT_SECRATE);
             userObject.token = token;

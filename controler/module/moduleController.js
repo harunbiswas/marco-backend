@@ -17,7 +17,10 @@ const addModule = async function (req, res) {
 // get modules
 const getModules = async function (req, res) {
   try {
-    const result = await Module.find({ publish: true });
+    const result = await Module.find({ publish: true }).populate(
+      "userId",
+      " firstName lastName"
+    );
     res.status(200).json(result);
   } catch {
     res.status(500).json("Internal server errors");
@@ -39,7 +42,7 @@ const getModule = async function (req, res) {
 // edit module
 const editModule = async function (req, res) {
   const { _id } = req.body;
-  req.body.userId = req.body.user._id;
+  req.body.userId = req.body.user.id;
 
   try {
     const result = await Module.findOneAndUpdate({ _id }, req.body, {
