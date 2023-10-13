@@ -7,6 +7,10 @@ const moduleSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "People",
+    },
     id: {
       type: String,
       required: true,

@@ -39,6 +39,7 @@ const getModule = async function (req, res) {
 // edit module
 const editModule = async function (req, res) {
   const { _id } = req.body;
+  req.body.userId = req.body.user._id;
 
   try {
     const result = await Module.findOneAndUpdate({ _id }, req.body, {
