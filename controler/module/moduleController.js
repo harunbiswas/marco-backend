@@ -105,6 +105,7 @@ const getTemplete = async function (req, res) {
 const editTemplete = async function (req, res) {
   const { _id } = req.body;
 
+  console.log(_id);
   try {
     const result = await Templete.findOneAndUpdate({ _id }, req.body, {
       new: true,
