@@ -17,6 +17,7 @@ const {
   getTempletes,
   getTemplete,
   deleteTemplete,
+  editTemplete,
 } = require("../controler/module/moduleController");
 const {
   addDateTemplete,
@@ -42,6 +43,7 @@ router.delete("/", authGurd, deleteModule);
 router.post("/templete", authGurd, addTemplete);
 router.get("/templetes", getTempletes);
 router.get("/templete", getTemplete);
+router.put("/templete", authGurd, editTemplete);
 router.delete("/templete", authGurd, deleteTemplete);
 
 // dete templete

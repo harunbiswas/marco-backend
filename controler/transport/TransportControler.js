@@ -24,7 +24,7 @@ const getTransport = async function (req, res) {
   const end = page * [perPage];
 
   try {
-    const searchValue = search.toLowerCase();
+    const searchValue = search.toString().toLowerCase();
     // Use separate conditions for each field
     const result = await Transport.find({
       $or: [

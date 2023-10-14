@@ -101,6 +101,20 @@ const getTemplete = async function (req, res) {
   }
 };
 
+// edit templete
+const editTemplete = async function (req, res) {
+  const { _id } = req.body;
+
+  try {
+    const result = await Templete.findOneAndUpdate({ _id }, req.body, {
+      new: true,
+    });
+    res.status(200).json(result);
+  } catch {
+    res.status(500).json("Internal server errors");
+  }
+};
+
 // delete module
 const deleteTemplete = async function (req, res) {
   const { id } = req.query;
@@ -121,5 +135,6 @@ module.exports = {
   addTemplete,
   getTempletes,
   getTemplete,
+  editTemplete,
   deleteTemplete,
 };
