@@ -24,15 +24,26 @@ const getTransport = async function (req, res) {
   const end = page * [perPage];
 
   try {
+    const searchValue = search.toLowerCase();
+    // Use separate conditions for each field
     const result = await Transport.find({
-      name: { $regex: new RegExp(search, "i") },
+      $or: [
+        { name: { $regex: new RegExp(searchValue, "i") } },
+        { city: { $regex: new RegExp(searchValue, "i") } },
+        { state: { $regex: new RegExp(searchValue, "i") } },
+      ],
     })
       .skip(start)
       .limit(end - start);
 
     const count = await Transport.countDocuments({
-      name: { $regex: new RegExp(search, "i") },
+      $or: [
+        { name: { $regex: new RegExp(searchValue, "i") } },
+        { city: { $regex: new RegExp(searchValue, "i") } },
+        { state: { $regex: new RegExp(searchValue, "i") } },
+      ],
     });
+
     res.status(200).json({ result, count });
   } catch (err) {
     res.status(500).json({
