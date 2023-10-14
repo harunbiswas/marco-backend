@@ -18,9 +18,18 @@ const addTransport = async function (req, res) {
 
 // get transports
 const getTransport = async function (req, res) {
+  const perPage = 30;
+  const { page } = req.query;
+  const start = (page - 1) * perPage;
+  const end = page * [perPage];
+
   try {
-    const result = await Transport.find();
-    res.status(200).json(result);
+    const result = await Transport.find()
+      .skip(start)
+      .limit(end - start);
+
+    const count = await Transport.countDocuments();
+    res.status(200).json({ result, count });
   } catch (err) {
     res.status(500).json({
       errors: {
