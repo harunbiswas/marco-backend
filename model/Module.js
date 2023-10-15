@@ -44,7 +44,7 @@ const moduleSchema = new mongoose.Schema(
         price: String,
         carrency: String,
         hotel: { type: mongoose.Schema.Types.ObjectId, ref: "Hotel" },
-        offer: [{ type: mongoose.Schema.Types.ObjectId, ref: "Hotel" }],
+        offer: { type: mongoose.Schema.Types.ObjectId, ref: "Hotel" },
       },
     ],
     fixtRegion: [
