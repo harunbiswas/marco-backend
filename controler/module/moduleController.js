@@ -47,7 +47,7 @@ const getModule = async function (req, res) {
   const { id } = req.query;
 
   try {
-    let result = await Module.findOne({ _id: id });
+    let result = await Module.findOne({ _id: id }).populate("hotel");
     res.status(200).json(result);
   } catch {
     res.status(500).json("Internal server errors");

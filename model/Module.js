@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Hotel = require("./Hotel");
 
 const moduleSchema = new mongoose.Schema(
   {
@@ -42,8 +43,8 @@ const moduleSchema = new mongoose.Schema(
         end: String,
         price: String,
         carrency: String,
-        hotelName: String,
-        offerName: String,
+        hotel: { type: mongoose.Schema.Types.ObjectId, ref: "Hotel" },
+        offer: [{ type: mongoose.Schema.Types.ObjectId, ref: "Hotel" }],
       },
     ],
     fixtRegion: [
