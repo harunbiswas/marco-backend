@@ -5,7 +5,7 @@ async function deleteUnpublishedOldDocuments() {
   try {
     const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000); // Calculate one day ago
     const deletedCount = await Module.deleteMany({
-      published: false,
+      publish: false,
       createdAt: { $lt: oneDayAgo },
     });
     console.log(
@@ -15,8 +15,6 @@ async function deleteUnpublishedOldDocuments() {
     console.error(error);
   }
 }
-
-deleteUnpublishedOldDocuments();
 
 // add module controller
 const addModule = async function (req, res) {
