@@ -1,10 +1,27 @@
 const Module = require("../../model/Module");
 const Templete = require("../../model/Templete");
 
+async function deleteUnpublishedOldDocuments() {
+  try {
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000); // Calculate one day ago
+    const deletedCount = await Module.deleteMany({
+      published: false,
+      createdAt: { $lt: oneDayAgo },
+    });
+    console.log(
+      `Deleted ${deletedCount.deletedCount} old, unpublished documents`
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+deleteUnpublishedOldDocuments();
+
 // add module controller
 const addModule = async function (req, res) {
   const module = new Module(req.body);
-
+  deleteUnpublishedOldDocuments();
   try {
     const result = await module.save();
     res.status(200).json(result);
