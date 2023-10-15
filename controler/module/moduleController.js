@@ -47,9 +47,10 @@ const getModule = async function (req, res) {
   const { id } = req.query;
 
   try {
-    let result = await Module.findOne({ _id: id }).populate("hotel");
+    let result = await Module.findOne({ _id: id }).populate("fiexDate.hotel");
     res.status(200).json(result);
-  } catch {
+  } catch (err) {
+    console.log(err);
     res.status(500).json("Internal server errors");
   }
 };
@@ -63,8 +64,10 @@ const editModule = async function (req, res) {
     const result = await Module.findOneAndUpdate({ _id }, req.body, {
       new: true,
     });
+
     res.status(200).json(result);
-  } catch {
+  } catch (err) {
+    console.log(err);
     res.status(500).json("Internal server errors");
   }
 };
