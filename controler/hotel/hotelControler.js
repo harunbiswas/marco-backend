@@ -3,9 +3,34 @@ const mongoose = require("mongoose");
 
 // get hotels
 const getHotels = async function (req, res) {
+  const perPage = 10;
+  const { page, search, week } = req.query;
+  const start = (page - 1) * perPage;
+  const end = page * [perPage];
+
+  let query = {
+    $or: [
+      { name: { $regex: new RegExp(search, "i") } },
+      { "offers.name": { $regex: new RegExp(search, "i") } },
+    ],
+  };
+
+  if (week === "true") {
+    const today = new Date();
+    const oneWeekAgo = new Date(today);
+    oneWeekAgo.setDate(today.getDate() - 7);
+
+    query.createdAt = {
+      $gte: oneWeekAgo,
+      $lt: today,
+    };
+  }
   try {
-    const result = await Hotel.find({});
-    res.status(200).json(result);
+    const result = await Hotel.find(query)
+      .skip(start)
+      .limit(end - start);
+    const count = await Hotel.countDocuments(query);
+    res.status(200).json({ count, result: result.length });
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -94,7 +119,6 @@ const updateHotel = async function (req, res) {
 };
 
 const addNewOffer = async function (req, res) {
-  console.log(req.body);
   const { newOffer, hotelId } = req.body;
   try {
     const result = await Hotel.updateOne(
@@ -140,7 +164,7 @@ const deleteHotel = async function (req, res) {
   try {
     const { id } = req.params;
     const result = await Hotel.findOneAndDelete({ _id: id });
-    console.log(result);
+
     res.status(200).json(result);
   } catch (err) {
     console.log(err);
