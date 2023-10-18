@@ -13,6 +13,7 @@ const getHotels = async function (req, res) {
       { name: { $regex: new RegExp(search, "i") } },
       { "offers.name": { $regex: new RegExp(search, "i") } },
     ],
+    publish: true,
   };
 
   if (week === "true") {
