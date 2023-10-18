@@ -8,6 +8,7 @@ const hotelRouter = require("./router/hotelRouter");
 const imageRouter = require("./router/imageRouter");
 const transportRouter = require("./router/transportRouter");
 const moduleRouter = require("./router/moduleRouter");
+const tagRouter = require("./router/tagRouter");
 
 const {
   notFoundHandler,
