@@ -177,7 +177,12 @@ const hotelSchema = new mongoose.Schema(
       },
     ],
     offers: [offerSchema],
+    publish: {
+      type: Boolean,
+      default: false,
+    },
   },
+
   {
     timestamps: true,
   }
