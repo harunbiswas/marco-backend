@@ -9,6 +9,10 @@ const citySchecma = new mongoose.Schema(
     },
     zip: String,
     region: String,
+    hotel: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
