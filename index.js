@@ -61,6 +61,8 @@ app.use("/transport", transportRouter);
 
 // module router
 app.use("/module", moduleRouter);
+// tag router
+app.use("/tag", tagRouter);
 
 // 404 handler
 app.use(notFoundHandler);
