@@ -30,7 +30,7 @@ const getHotels = async function (req, res) {
       .skip(start)
       .limit(end - start);
     const count = await Hotel.countDocuments(query);
-    res.status(200).json({ count, result: result.length });
+    res.status(200).json({ count, result });
   } catch (err) {
     console.log(err);
     res.status(500).json({
