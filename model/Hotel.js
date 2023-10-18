@@ -168,7 +168,6 @@ const hotelSchema = new mongoose.Schema(
       {
         id: {
           type: Number,
-          default: 1 + Math.random(),
         },
         isEdit: Boolean,
         label: String,
