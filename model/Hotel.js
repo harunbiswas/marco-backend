@@ -27,6 +27,12 @@ const offerSchema = new mongoose.Schema(
     maxStay: {
       type: Number,
     },
+    package: {
+      type: String,
+    },
+    omaggi: {
+      type: String,
+    },
     beverageAvailability: {
       type: String,
     },
