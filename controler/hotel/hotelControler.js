@@ -8,10 +8,20 @@ const getHotels = async function (req, res) {
   const start = (page - 1) * perPage;
   const end = page * [perPage];
 
+  const searchValue = search.replace("$", "");
+
   let query = {
     $or: [
-      { name: { $regex: new RegExp(search, "i") } },
-      { "offers.name": { $regex: new RegExp(search, "i") } },
+      {
+        name: {
+          $regex: new RegExp(search, "i"),
+        },
+      },
+      {
+        "offers.name": {
+          $regex: new RegExp((search[0] === "$" && searchValue) || search, "i"),
+        },
+      },
     ],
     publish: true,
   };
