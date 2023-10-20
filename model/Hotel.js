@@ -55,6 +55,10 @@ const offerSchema = new mongoose.Schema(
         discount: Number,
       },
     ],
+    noUpdateXML: {
+      type: Boolean,
+      default: false,
+    },
     // publish: {
     //   type: Boolean,
     //   default: false,
