@@ -27,7 +27,7 @@ const offerSchema = new mongoose.Schema(
     maxStay: {
       type: Number,
     },
-    package: {
+    packages: {
       type: String,
     },
     omaggi: {
@@ -37,6 +37,7 @@ const offerSchema = new mongoose.Schema(
       type: String,
     },
     tags: [String],
+    supplement: [String],
     breakdown: [
       {
         breakdownId: Number,

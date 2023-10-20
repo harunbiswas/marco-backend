@@ -137,6 +137,7 @@ const updateHotel = async function (req, res) {
 
 const addNewOffer = async function (req, res) {
   const { newOffer, hotelId } = req.body;
+
   try {
     const result = await Hotel.updateOne(
       { _id: hotelId },
@@ -155,7 +156,7 @@ const addNewOffer = async function (req, res) {
 
 const updateOffer = async function (req, res) {
   const { updatedOffer, hotelId, offerId } = req.body;
-  console.log(req.body);
+  // console.log(updatedOffer);
   const offerToUpdate = {};
   for (const prop in updatedOffer) {
     offerToUpdate[`offers.$.${prop}`] = updatedOffer[prop];
