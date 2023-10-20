@@ -37,7 +37,12 @@ const offerSchema = new mongoose.Schema(
       type: String,
     },
     tags: [String],
-    supplement: [String],
+    supplement: [
+      {
+        name: String,
+        price: Number,
+      },
+    ],
     breakdown: [
       {
         breakdownId: Number,
