@@ -41,6 +41,7 @@ const offerSchema = new mongoose.Schema(
       {
         name: String,
         price: Number,
+        currency: String,
       },
     ],
     breakdown: [
