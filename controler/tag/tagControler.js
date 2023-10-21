@@ -7,7 +7,7 @@ const getTagsByKey = async function (req, res) {
     const unusedTags = await Tag.aggregate([
       {
         $lookup: {
-          from: "hotels", // Assuming your hotels collection is named "hotels"
+          from: "hotels",
           localField: "_id",
           foreignField: "offers.tags",
           as: "usedTags",
@@ -15,7 +15,7 @@ const getTagsByKey = async function (req, res) {
       },
       {
         $match: {
-          usedTags: { $size: 0 }, // Filter tags that are not used in any hotels
+          usedTags: { $size: 0 },
         },
       },
     ]);
@@ -25,14 +25,12 @@ const getTagsByKey = async function (req, res) {
         _id: { $in: unusedTags.map((tag) => tag._id) },
       });
 
-      console.log(`Deleted ${deletedTags.deletedCount} tags`);
-
-      const result = await Tag.find(); // Assuming you want to retrieve tags after deletion
-      console.log("Tag results", result);
+      const result = await Tag.find();
 
       res.status(200).json(result);
     } else {
-      res.status(200).json([]);
+      const result = await Tag.find();
+      res.status(200).json(result);
     }
   } catch (err) {
     console.error(err);
