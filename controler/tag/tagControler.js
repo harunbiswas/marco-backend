@@ -4,35 +4,38 @@ require("dotenv").config();
 
 const getTagsByKey = async function (req, res) {
   try {
-    const allTags = await Tag.find({});
+    const unusedTags = await Tag.aggregate([
+      {
+        $lookup: {
+          from: "hotels", // Assuming your hotels collection is named "hotels"
+          localField: "_id",
+          foreignField: "offers.tags",
+          as: "usedTags",
+        },
+      },
+      {
+        $match: {
+          usedTags: { $size: 0 }, // Filter tags that are not used in any hotels
+        },
+      },
+    ]);
 
-    for (const tag of allTags) {
-      const isTagUsed = await Hotel.exists({
-        $or: [
-          { "offers.tags": tag._id }, // Assuming tags are stored as ObjectIds in the offers array
-          { services: tag.name }, // Assuming services are stored as strings in the services array
-          { strengths: tag.name }, // Assuming strengths are stored as strings in the strengths array
-        ],
+    if (unusedTags.length > 0) {
+      const deletedTags = await Tag.deleteMany({
+        _id: { $in: unusedTags.map((tag) => tag._id) },
       });
 
-      if (!isTagUsed) {
-        try {
-          const deletedTag = await Tag.findByIdAndDelete(tag._id);
+      console.log(`Deleted ${deletedTags.deletedCount} tags`);
 
-          const result = await Tag.findOne(); // Assuming you want to retrieve a tag after deletion
-          console.log("Tag result", result);
+      const result = await Tag.find(); // Assuming you want to retrieve tags after deletion
+      console.log("Tag results", result);
 
-          res.status(200).json(result);
-        } catch (err) {
-          res.status(500).json({
-            errors: {
-              msg: "Internal server error",
-            },
-          });
-        }
-      }
+      res.status(200).json(result);
+    } else {
+      res.status(200).json([]);
     }
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       errors: {
         msg: "Internal server error",
