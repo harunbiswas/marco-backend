@@ -48,7 +48,7 @@ const offerSchema = new mongoose.Schema(
       {
         breakdownId: Number,
         name: String,
-        priceType: String,
+        priceType: Number,
         currency: String,
         price: Number,
       },
@@ -69,6 +69,7 @@ const offerSchema = new mongoose.Schema(
     //   type: Boolean,
     //   default: false,
     // },
+    lowestOfferPrice: Number,
   },
   {
     timestamps: true,
