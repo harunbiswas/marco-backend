@@ -1,37 +1,52 @@
+const Hotel = require("../../model/Hotel");
 const Tag = require("../../model/Tag");
+const cron = require("node-cron");
 
 require("dotenv").config();
 
+const findHotelsByTagName = async (tagName) => {
+  try {
+    const hotelsWithTagName = await Hotel.find({
+      $or: [
+        { services: tagName }, // Check if the tag is in the 'tags' array of the hotel
+        { strengths: tagName }, // Check if the tag is in the 'tags' array of the hotel
+        { "offers.tags": tagName }, // Check if the tag is in any of the 'tags' arrays in offers
+      ],
+    });
+
+    return hotelsWithTagName;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+// Define the cron schedule (e.g., run at 2:00 AM every day)
+cron.schedule("0 2 * * *", async () => {
+  try {
+    const result = await Tag.find();
+    const filterResult = [];
+
+    for (const item of result) {
+      const hotels = await findHotelsByTagName(item.name);
+      if (!hotels.length) {
+        filterResult.push(item.name);
+      }
+    }
+
+    if (filterResult.length) {
+      await Tag.deleteMany({ name: { $in: filterResult } });
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 const getTagsByKey = async function (req, res) {
   try {
-    const unusedTags = await Tag.aggregate([
-      {
-        $lookup: {
-          from: "hotels",
-          localField: "_id",
-          foreignField: "offers.tags",
-          as: "usedTags",
-        },
-      },
-      {
-        $match: {
-          usedTags: { $size: 0 },
-        },
-      },
-    ]);
+    const result = await Tag.find();
 
-    if (unusedTags.length > 0) {
-      const deletedTags = await Tag.deleteMany({
-        _id: { $in: unusedTags.map((tag) => tag._id) },
-      });
-
-      const result = await Tag.find();
-
-      res.status(200).json(result);
-    } else {
-      const result = await Tag.find();
-      res.status(200).json(result);
-    }
+    res.status(200).json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -43,13 +58,18 @@ const getTagsByKey = async function (req, res) {
 };
 
 const addNewTag = async function (req, res) {
-  console.log(req.body);
   const { tag, tagCat } = req.body;
   try {
-    const result = await Tag.updateOne({}, { $addToSet: { [tagCat]: tag } });
+    const newTag = new Tag({
+      name: tag,
+      catagory: tagCat,
+    });
+
+    const result = await newTag.save();
+    console.log(result);
     res.status(200).json(result);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).json({
       errors: {
         msg: "Internal server error",

@@ -2,9 +2,11 @@ const mongoose = require("mongoose");
 
 const tagSchema = new mongoose.Schema(
   {
-    hotelServices: [String],
-    hotelStrengths: [String],
-    offerTags: [String],
+    name: String,
+    catagory: String,
+  },
+  {
+    timestamps: true,
   }
 );
 
