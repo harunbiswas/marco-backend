@@ -23,7 +23,6 @@ const getHotels = async function (req, res) {
         },
       },
     ],
-    publish: true,
   };
 
   if (week === "true") {
