@@ -1,5 +1,16 @@
 const Hotel = require("../../model/Hotel");
 const mongoose = require("mongoose");
+const cron = require("node-cron");
+
+// Define the cron schedule (e.g., run at 2:00 AM every day)
+cron.schedule("0 2 * * *", async () => {
+  try {
+    await Hotel.deleteMany({ publish: { $ne: true } });
+    console.log("DELETE HOTEL");
+  } catch (err) {
+    console.error(err);
+  }
+});
 
 // get hotels
 const getHotels = async function (req, res) {
@@ -23,6 +34,7 @@ const getHotels = async function (req, res) {
         },
       },
     ],
+    publish: true,
   };
 
   if (week === "true") {
@@ -40,7 +52,6 @@ const getHotels = async function (req, res) {
   if (week === "Disabilita") {
     delete query.createdAt;
     query.disabled = true;
-    query.publish = true;
   }
   try {
     const result = await Hotel.find(query)
