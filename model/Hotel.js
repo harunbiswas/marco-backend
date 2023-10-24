@@ -187,9 +187,7 @@ const hotelSchema = new mongoose.Schema(
     },
     distance: [
       {
-        id: {
-          type: Number,
-        },
+        id: Number,
         isEdit: Boolean,
         label: String,
         scale: String,
