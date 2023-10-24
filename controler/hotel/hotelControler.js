@@ -41,6 +41,7 @@ const getHotels = async function (req, res) {
   if (week === "Disabilita") {
     delete query.createdAt;
     query.disabled = true;
+    query.publish = true;
   }
   try {
     const result = await Hotel.find(query)
