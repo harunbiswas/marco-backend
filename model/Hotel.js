@@ -201,6 +201,10 @@ const hotelSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   {
