@@ -129,6 +129,9 @@ const hotelSchema = new mongoose.Schema(
     roomsDescription: {
       type: String,
     },
+    roomsTitle: String,
+    spaTite: String,
+    restaurantTitle: String,
     spaDescription: {
       type: String,
     },
