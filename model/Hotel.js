@@ -130,7 +130,7 @@ const hotelSchema = new mongoose.Schema(
       type: String,
     },
     roomsTitle: String,
-    spaTite: String,
+    spaTitle: String,
     restaurantTitle: String,
     spaDescription: {
       type: String,
